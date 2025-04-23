@@ -90,7 +90,7 @@ export async function POST(request: Request) {
         console.log("Error regerting user", error)
         Response.json({
             message: "Error Registering user",
-            success: false
+            success: true
         },
             {
                 status: 500
