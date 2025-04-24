@@ -17,17 +17,22 @@ export async function GET(request: Request) {
 
         const queryParam=searchParams.get('username');
 
+        console.log(queryParam)
+
         const result = userNameQuerySchema.safeParse(queryParam);
+        console.log(result?.error?.format()._errors);
 
         if(!result.success){
-            const usernameErros=result.error.format().username?._errors || [];
+            
+            const usernameErrors = result.error.format().username?._errors || [];
+           
 
           return  Response.json({
                 success: false,
-                message: "error checking username"
+                message: usernameErrors
             }
                 , {
-                    status: 400
+                    status: 201
                 })
             
         }
@@ -62,7 +67,7 @@ export async function GET(request: Request) {
 
 
     } catch (error) {
-
+       
        return Response.json({
             success: false,
             message: "error checking username"
