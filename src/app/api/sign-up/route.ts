@@ -82,7 +82,7 @@ export async function POST(request: Request) {
             message: "User Registered Successfully",
             success: false
         }, {
-            status: 500
+            status: 200
         })
 
     } catch (error) {

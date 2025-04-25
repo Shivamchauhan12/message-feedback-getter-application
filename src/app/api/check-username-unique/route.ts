@@ -12,15 +12,16 @@ export async function GET(request: Request) {
     await dbConnect();
 
     try {
+        
 
-        const {searchParams} = new URL(request.url);
+        const {searchParams} = new URL(decodeURIComponent(request.url));
+       
+        const queryParam={ username: searchParams.get('username') ?? ''}
 
-        const queryParam=searchParams.get('username');
-
-        console.log(queryParam)
+     
 
         const result = userNameQuerySchema.safeParse(queryParam);
-        console.log(result?.error?.format()._errors);
+     
 
         if(!result.success){
             
@@ -29,10 +30,12 @@ export async function GET(request: Request) {
 
           return  Response.json({
                 success: false,
-                message: usernameErrors
+                message:   usernameErrors?.length > 0
+                ? usernameErrors.join(', ')
+                : 'Invalid query parameters', 
             }
                 , {
-                    status: 201
+                    status: 400
                 })
             
         }
