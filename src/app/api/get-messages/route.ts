@@ -16,6 +16,8 @@ export async function GET(request: Request) {
 
     const user: User = session?.user as User;
 
+   
+
     if (!session || !session.user) {
         return Response.json({
             success: false,
@@ -28,17 +30,24 @@ export async function GET(request: Request) {
 
     const userId = new mongoose.Types.ObjectId(user._id);
 
+    
+
     try {
 
         const user = await UserModel.aggregate([
-            { $match: userId },
-            { $unwind: '$messages' },
+            { $match: { _id: new mongoose.Types.ObjectId(userId) } },
+            { $unwind: { path: '$messages', preserveNullAndEmptyArrays: true } },  
             { $sort: { 'messages.createdAt': -1 } },
-            { $group: { _id: '$_id', messages: { $push: '$messages' } } }
-        ])
-
+            { 
+              $group: { 
+                _id: '$_id', 
+                messages: { $push: '$messages' } 
+              } 
+            }
+        ]);
+        
+        console.log(user,userId)
         if (!user || user.length === 0) {
-
             return Response.json({
                 success: false,
                 message: "user not found"

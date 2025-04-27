@@ -70,7 +70,7 @@ export default function page() {
       const res = await axios.post('/api/sign-up', data)
 
       toast(res.data.message);
-      router.replace("/sign-in")
+      router.replace(`/verify?username=${data.username}`)
 
 
 

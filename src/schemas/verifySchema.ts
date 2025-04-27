@@ -1,5 +1,5 @@
 import { z } from "zod";
 
-export const verifySchema= z.object({
-    code : z.string().length(6,"Verification code must be 6 digits")
+export const verifyCodeSchema= z.object({
+    code: z.coerce.number().min(100000, "Code must be at least 6 digits"),
 })

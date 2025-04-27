@@ -10,7 +10,7 @@ export const authOptions : NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
-            id:"credetials",
+            id:"credentials",
             credentials: {
                 username: { label: "Email or username", type: "text"},
                 password: { label: "Password", type: "password" }
@@ -41,8 +41,8 @@ export const authOptions : NextAuthOptions = {
                     }
 
                 } catch (error:any) {
-                    throw new Error(error);
-                }   
+                    throw new Error(error?.message || "Authentication failed");
+                 }   
               }
         })
     ],
