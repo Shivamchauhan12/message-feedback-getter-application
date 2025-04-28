@@ -15,6 +15,7 @@ export async function GET(request: Request) {
     //  const session = auth();
 
     const user: User = session?.user as User;
+    
 
    
 
