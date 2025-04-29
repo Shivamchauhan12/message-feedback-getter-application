@@ -3,7 +3,7 @@ import dbConnect from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
 import { User } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
-import auth from "next-auth"
+ 
 
 export async function POST(request: Request) {
 
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
 
     } catch (error) {
 
-        console.log("failed to update the status of accept messages");
+        console.log("failed to update the status of accept messages",error);
         return Response.json({
             success: false,
             message: "failde to update messsage status"
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
 
 }
 
-export async function GET(request : Request){
+export async function GET(_request : Request){
 
     await dbConnect();
 
@@ -121,7 +121,7 @@ export async function GET(request : Request){
         
     } catch (error) {
 
-        console.log("unable to get message status  ");
+        console.log("unable to get message status",error);
 
         return Response.json({
             success: false,

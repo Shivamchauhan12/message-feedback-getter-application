@@ -3,9 +3,6 @@
 import React from 'react';
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -20,7 +17,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import UserModel from '@/model/User';
 import axios from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
 import { toast } from 'sonner';

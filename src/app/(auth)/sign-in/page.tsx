@@ -110,7 +110,7 @@ export default function Page() {
         </Form>
 
         <p className="text-center text-xs text-gray-500">
-          Don't have an account? <span onClick={()=>{router.push("/sign-up")}} className="underline cursor-pointer hover:text-white">Register</span>
+          Don not have an account? <span onClick={()=>{router.push("/sign-up")}} className="underline cursor-pointer hover:text-white">Register</span>
         </p>
       </div>
     </div>

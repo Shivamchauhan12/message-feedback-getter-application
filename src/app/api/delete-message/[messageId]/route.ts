@@ -8,8 +8,8 @@ import { authOptions } from "../../auth/[...nextauth]/options";
 
 
 
-export async function DELETE(request: Request, { params }: { params: { messageId: string } }) {
-    const id = params.messageId;
+export async function DELETE(request: Request, { params }: { params: Promise<{ messageId: string }>}) {
+   
 
   
     const session = await getServerSession(authOptions);   
@@ -29,7 +29,7 @@ export async function DELETE(request: Request, { params }: { params: { messageId
     await dbConnect();
   try {
 
-    const messageId=params.messageId
+    const messageId=  (await params).messageId
 
     const res=await UserModel.updateOne({
         _id:_user._id

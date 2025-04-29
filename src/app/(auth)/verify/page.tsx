@@ -24,7 +24,7 @@ import { verifyCodeSchema } from '@/schemas/verifySchema';
 export default function VerifyPage() {
   const searchParams = useSearchParams();
   const route = useRouter();
-  const [username, setUsername] = useState(searchParams.get('username'));
+  const username =  searchParams.get('username');
   const [isVerifying, setIsVerifying] = useState(false);
 
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
