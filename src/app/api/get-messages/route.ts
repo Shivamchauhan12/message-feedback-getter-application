@@ -6,7 +6,7 @@ import { authOptions } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 
 
-export async function GET(request: Request) {
+export async function GET( ) {
 
     await dbConnect();
 
@@ -68,7 +68,7 @@ export async function GET(request: Request) {
 
     } catch (error) {
 
-        console.log("all messages not fetched succesfully")
+        console.log("all messages not fetched succesfully",error)
 
         return Response.json({
             success: false,

@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         if (!user.isAcceptingMessage) {
             return Response.json({
                 success: false,
-                message: "user isnot accepting the messages"
+                message: "user is not accepting the messages"
             }
                 , {
                     status: 403
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
     } catch (error) {
 
-        console.log("an unexpected error occured");
+        console.log("an unexpected error occured",error);
 
         return Response.json({
             success: false,

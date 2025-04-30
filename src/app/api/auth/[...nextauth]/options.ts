@@ -3,8 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
- 
- 
+
+
 export const authOptions : NextAuthOptions = {
 
     providers: [
@@ -57,7 +57,6 @@ export const authOptions : NextAuthOptions = {
       return session
     },
     async jwt({ token, user}) {
-
         if(user){
             token._id=user._id,
             token.isVerified=user.isVerified,

@@ -27,14 +27,14 @@ type MessageCardProps = {
   onMessageDelete: (messageId: string) => void;
 };
 
-const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
+const MessageCard = ({ message }: MessageCardProps) => {
   const deleteMessage = async () => {
     try {
       const res = await axios.delete<ApiResponse>(`api/delete-message/${message._id}`);
       toast(res.data.message);
    //   onMessageDelete(message._id); // Notify parent component to update the UI
     } catch (error) {
-      console.log('Unable to delete message');
+      console.log('Unable to delete message',error);
       toast('Error deleting message');
     }
   };

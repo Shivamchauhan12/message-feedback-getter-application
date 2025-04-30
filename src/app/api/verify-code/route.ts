@@ -67,6 +67,8 @@ export  async  function POST (request : Request){
         
     } catch (error) {
 
+        console.log("Error verifying code",error)
+
         Response.json({
             success: false,
             message: "error verifying code"

@@ -40,7 +40,7 @@ export async function GET(request: Request) {
             
         }
 
-        const { username }: any = result.data;
+        const { username }= result.data;
 
         const existingVerifiedUser= await UserModel.findOne({
             username,isVerified:true
@@ -70,7 +70,7 @@ export async function GET(request: Request) {
 
 
     } catch (error) {
-       
+       console.log("Unique username check error ",error)
        return Response.json({
             success: false,
             message: "error checking username"
