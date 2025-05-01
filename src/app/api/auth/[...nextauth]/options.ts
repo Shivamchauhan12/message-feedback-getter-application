@@ -3,6 +3,15 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
+interface Credentials {  
+        redirect: string,
+        identifier: string,
+        password: string,
+        csrfToken: string,
+        callbackUrl: string,
+        json: string,
+      }
+  
 
 
 export const authOptions : NextAuthOptions = {
@@ -15,7 +24,10 @@ export const authOptions : NextAuthOptions = {
                 username: { label: "Email or username", type: "text"},
                 password: { label: "Password", type: "password" }
               },
-              async authorize(credentials : any) : Promise<any>{
+              async authorize(credentials:any ) : Promise<any>{
+
+                console.log(credentials)
+
 
                 await dbConnect();
 
@@ -49,19 +61,19 @@ export const authOptions : NextAuthOptions = {
     callbacks:{ 
     async session({ session, token }) {
         if(token){
-            session.user._id=token._id,
-            session.user.isVerified=token.isVerified,
-            session.user.isAcceptingMessages=token.isAcceptingMessages,
-            session.user.username=token.username
+            session.user._id=token._id;
+            session.user.isVerified=token.isVerified;
+            session.user.isAcceptingMessages=token.isAcceptingMessages;
+            session.user.username=token.username;
         }
       return session
     },
     async jwt({ token, user}) {
         if(user){
-            token._id=user._id,
-            token.isVerified=user.isVerified,
-            token.isAcceptingMessages=user.isAcceptingMessages,
-            token.username=user.username
+            token._id=user._id;
+            token.isVerified=user.isVerified;
+            token.isAcceptingMessages=user.isAcceptingMessages;
+            token.username=user.username;
         }
 
       return token

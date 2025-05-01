@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -22,9 +22,10 @@ import { ApiResponse } from '@/types/ApiResponse';
 import { verifyCodeSchema } from '@/schemas/verifySchema';
 
 export default function VerifyPage() {
-  const searchParams = useSearchParams();
+  const searchParams = useParams();
+ 
   const route = useRouter();
-  const username =  searchParams.get('username');
+  const username =  searchParams.username;
   const [isVerifying, setIsVerifying] = useState(false);
 
   const form = useForm<z.infer<typeof verifyCodeSchema>>({

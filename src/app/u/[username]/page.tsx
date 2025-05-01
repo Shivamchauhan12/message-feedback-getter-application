@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -67,15 +66,7 @@ const Page = () => {
     }
   }
 
-  // async function getSuggestedMessages(prompt: string="") {
-  //   try {
-  //     const res = await axios.post("/api/gemenai-model", { text: prompt })
-  //     console.log(res)
-  //     return res;
-  //   } catch (error) {
-  //     toast("Internal Server Error");
-  //   } 
-  // }
+ 
 
 
   async function getSuggestedMessages(prompt: string = "") {
@@ -89,21 +80,9 @@ const Page = () => {
       if (!res.body) {
         throw new Error("No response body");
       }
-
       const reader = res.body.getReader();
-
       return reader;
-
-      // const decoder = new TextDecoder();
-      // let result = "";
-
-      // while (true) {
-      //   const { value, done } = await reader.read();
-      //   if (done) break;
-
-      //   result += decoder.decode(value, { stream: true });
-      // }
-      // return result;
+ 
     } catch (error) {
       toast("Internal Server Error");
       console.error("Streaming error:", error);
@@ -116,7 +95,7 @@ const Page = () => {
     const data = await getSuggestedMessages();
     const decoder = new TextDecoder();
     let result = "";
-    var newMessages;
+    let newMessages;
     while (true && data) {
       const { value, done } = await data.read();
       if (done) break;
@@ -133,7 +112,7 @@ const Page = () => {
     if (msg) {
       setValue("content", msg);
     }
-  }
+  }  
 
 
   const handleSendChat = async () => {
@@ -142,36 +121,28 @@ const Page = () => {
     setIsSendingChatQuery(true);
     const userMsg = chatInput.trim();
     setChatMessages((prev) => [...prev, `You: ${userMsg}`]);
-    setChatInput(""); // Clear the input field
+    setChatInput("");  
   
     try {
-      // Call API to get the suggested messages stream
+      
       const res = await getSuggestedMessages(userMsg);
-  
-      // Initialize a decoder for streaming the data
       const decoder = new TextDecoder();
       let result = "";
-      const botMessageIndex = chatMessages.length;
-      // Loop to process chunks of data as they come in
+      const botMessageIndex = chatMessages.length+1;
+      console.log(botMessageIndex)
+      
       while (true && res) {
         const { value, done } = await res.read();
-  
-        if (done) break;  // Exit loop if no more data
-  
-        // Decode the chunk and append it to the current result
+        if (done) break;  
         result += decoder.decode(value, { stream: true });
-        // Update chat messages with real-time data
         setChatMessages((prev) => {
-           const updatedMessages = [...prev];
-          updatedMessages[botMessageIndex] = `Bot: ${result}`; // Update the bot's message
-          return updatedMessages; // Return updated messages array
+          const updatedMessages = [...prev];
+          updatedMessages[botMessageIndex] = `Bot: ${result}`;  
+          return updatedMessages;  
         });
-  
-        // Optionally, you can log the current result for debugging
-        console.log(result);
       }
     } catch (error) {
-      // In case of error, show error message
+      console.log(error)
       setChatMessages((prev) => [...prev, "Bot: Error retrieving response."]);
     } finally {
       setIsSendingChatQuery(false);
