@@ -61,7 +61,7 @@ export default function Page() {
       const res = await axios.post('/api/sign-up', data)
 
       toast(res.data.message);
-      router.replace(`/verify?username=${data.username}`)
+      router.replace(`/verify/${data.username}`)
 
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;

@@ -1,5 +1,5 @@
 import VerificationEmail from "../../emails/verificationEmail";
-import { resend } from "@/lib/resend";
+import nodemailer from "nodemailer";
 import { ApiResponse } from "@/types/ApiResponse";
 
 export async function sendVerificationEmail(
@@ -8,38 +8,35 @@ export async function sendVerificationEmail(
     verifyCode: string
 ): Promise<ApiResponse> {
     try {
-    console.log(email)
-        const {error } = await resend.emails.send({
-            from: 'nlgfeedback@onresend.com',
-            to: [email],
-            subject: 'verification code',
-            react: VerificationEmail({ username, otp:verifyCode }),
+     
+        const htmlContent = VerificationEmail({ username, otp: verifyCode });
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS, // App password
+            },
         });
 
-        if(error){
-            return {
-                success:false,
-                message:"Verification email not sent"
-            }
-        }
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Verification Code',
+            html: htmlContent,  
+        };
+
+        await transporter.sendMail(mailOptions);
 
         return {
-            success:true,
-            message:"verification email send succesfully"
-        }
-        
+            success: true,
+            message: "Verification email sent successfully",
+        };
     } catch (error) {
-
-        console.log("email not snet",error)
-
+        console.error("Error sending verification email:", error);
         return {
-            success:false,
-            message:"verification email not sent"
-        }
-        
+            success: false,
+            message: "Verification email not sent",
+        };
     }
-
-  
-
-
 }
